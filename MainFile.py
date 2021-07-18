@@ -1,13 +1,18 @@
 import json
 from difflib import get_close_matches
+
+
+#load the data 
 data=json.load(open("datafiles/data.json"))
 
+#function to checking meaning
 def translate(w):
     w=w.lower()
     if w in data:
         return data[w]
 
     elif len(get_close_matches(w,data.keys()))>0:
+        # if similar word is added like rain and rainn then choose right one 
         yn=input("Did you mean %s instead? Enter y if yes or n if no "%get_close_matches(w,data.keys())[0])
         if yn=="y":
             return data[get_close_matches(w,data.keys())[0]]
@@ -21,7 +26,6 @@ def translate(w):
 word=input("Enter the word : ")
 
 output=translate(word)
-
 if type(output)==list:
     for item in output:
         print(item)
